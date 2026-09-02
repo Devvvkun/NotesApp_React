@@ -5,7 +5,7 @@ function App() {
 
 
   return (
-    <div className='h-screen w-screen bg-black text-white'>
+    <div className='h-full w-full bg-black text-white'>
     <NotesApp />
     </div>
   )
