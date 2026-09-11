@@ -5,21 +5,27 @@ const NotesApp = () => {
         "Title" : "",
         "Desc" : ""
     })
-    const [sbtNotes , setsbtNotes] = useState([{
-        "Title"  : "",
-        "Desc"  : ""
-    }])
+    const [sbtNotes , setsbtNotes] = useState([])
     const handleNote = (e) => {
         const {name , value} = e.target
         setNotes({...Notes , [name]:value})
     }
+    
      const handleSubmit = (e) =>{
             e.preventDefault()
-            let copyNote = [...Notes]
-            copyNote.push({Title,Desc})
+            let copyNote = [...sbtNotes]
+            copyNote.push(Notes)
             setsbtNotes(copyNote)
-            setNotes("")
+            setNotes({
+                "Title" : "",
+                "Desc" : ""
+            })
         }
+        const handleDelete = (idx) =>{
+            let deleteNote = [...sbtNotes]
+            deleteNote.splice(idx,1)
+            setsbtNotes(deleteNote)
+        } 
   return (
   <form onSubmit={handleSubmit}>  <div className='flex flex-col w-full sm:flex-row'>
         
@@ -36,9 +42,42 @@ const NotesApp = () => {
 </button>
        
         </div>
-        <div className="shownotes  h-screen w-1/2 flex flex-wrap my-0.5 overflow-hidden sm:border-l-2 sm:border-white">
-            <div className="note h-60 w-[45%] mx-2 my-2 lg:w-[27%] bg-white text-black p-4  wrap-break-word"><h1 className='font-medium'>{sbtNotes.Title}</h1> <br /> <p className='pt-2 '>{sbtNotes.Desc}</p></div>
-           
+       
+
+      
+        <div className="shownotes  h-screen w-1/2 pb-50 flex flex-wrap my-0.5 overflow-hidden sm:border-l-2 sm:border-white">
+         {sbtNotes.map((note,idx) => {
+     return (
+  <div
+    key={idx}
+    className="
+      note h-70 w-[50%] mx-2 my-0
+      lg:w-[27%]
+      bg-[url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyaX_oeUqgWZqqmIT2HNNT9QZEGyn67Ek53nKNLVvKJw&s=10')]
+      bg-no-repeat bg-contain
+      text-black px-4
+      wrap-break-words
+      flex flex-col
+    "
+  >
+    <h1 className="font-bold text-2xl pt-12 pl-1 pb-3">
+      {note.Title}
+    </h1>
+
+    <p className="leading-tight px-2 break-words whitespace-normal overflow-hidden">
+      {note.Desc}
+    </p>
+
+    <input
+      type="button"
+      className="bg-red-500 py-1 mt-auto mx-auto w-3/4"
+      value="Delete"
+      onClick={()=>{
+        handleDelete(idx)
+      }}
+    />
+  </div>
+)})} 
         </div>
     </div> </form>
   )

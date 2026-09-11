@@ -1,1 +1,8 @@
 @import "tailwindcss";
+@import url('https://googleapis.com');
+.title{
+    font-family: MedievalSharp;
+}
+.desc{
+    font-family: Estonia;
+}
